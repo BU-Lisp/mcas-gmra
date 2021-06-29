@@ -45,9 +45,11 @@ include_directories(${3RD_PARTY_ROOT})
 # build modules first
 set(HDRS
     ${INC_ROOT}/trees/covertree.h
+    ${INC_ROOT}/trees/dyadictree.h
 )
 set(SRCS
     ${SRC_ROOT}/covertree.cc
+    ${SRC_ROOT}/dyadictree.cc
 )
 set(PYBIND_SRCS
     ${PYBIND_ROOT}/pybind_trees.cc

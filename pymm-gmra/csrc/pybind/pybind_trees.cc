@@ -5,6 +5,8 @@
 
 // C++ PROJECT INCLUDES
 #include "trees/covertree.h"
+#include "trees/dyadictree.h"
+
 
 namespace py = pybind11;
 
@@ -15,9 +17,10 @@ PYBIND11_MODULE(gmra_trees, m)
     py::class_<CoverNode, std::shared_ptr<CoverNode> >(m, "CoverNode")
         .def(py::init([](int64_t pt_idx) { return std::make_shared<CoverNode>(pt_idx); }))
         .def("add_child", &CoverNode::add_child)
-        .def("get_children", &CoverNode::get_children);
+        .def("get_children", &CoverNode::get_children)
+        .def("get_subtree_idxs", &CoverNode::get_subtree_idxs);
 
-    py::class_<CoverTree>(m, "CoverTree")
+    py::class_<CoverTree, std::shared_ptr<CoverTree> >(m, "CoverTree")
         .def(py::init<int64_t, float>(),
              "constructor",
              py::arg("max_scale") = 10,
@@ -28,4 +31,17 @@ PYBIND11_MODULE(gmra_trees, m)
         .def_property_readonly("num_nodes", &CoverTree::get_num_nodes)
         .def_property_readonly("min_scale", &CoverTree::get_min_scale)
         .def_property_readonly("max_scale", &CoverTree::get_max_scale);
+
+
+    py::class_<DyadicCell, std::shared_ptr<DyadicCell> >(m, "DyadicCell")
+        .def(py::init<const torch::Tensor&>())
+        .def_property_readonly("idxs", &DyadicCell::get_idxs);
+
+    py::class_<DyadicTree, std::shared_ptr<DyadicTree> >(m, "DyadicTree")
+        .def(py::init<std::shared_ptr<CoverTree> >())
+        .def("validate", &DyadicTree::validate)
+        .def("get_idxs_at_level", &DyadicTree::get_idxs_at_level)
+        .def_property_readonly("root", &DyadicTree::get_root)
+        .def_property_readonly("num_nodes", &DyadicTree::get_num_nodes)
+        .def_property_readonly("num_levels", &DyadicTree::get_num_levels);
 }

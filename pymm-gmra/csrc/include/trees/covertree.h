@@ -42,9 +42,13 @@ public:
     get_children(int64_t level,
                  bool only_children = false);
 
+    torch::Tensor
+    get_subtree_idxs(int64_t max_scale);
+
 private:
     int64_t                                                 _pt_idx;
     std::map<int64_t, std::unordered_set<CoverNodePtr> >    _children;
+    CoverNodePtr                                            _parent;
 };
 
 

@@ -3,6 +3,7 @@ from tensorflow.keras.datasets import mnist
 from typing import Set
 from tqdm import tqdm
 from sklearn.metrics.pairwise import euclidean_distances
+import argparse
 import numpy as np
 import os
 import sys
@@ -16,10 +17,15 @@ del _cd_
 
 
 # PYTHON PROJECT IMPORTS
-from gmra_trees import CoverTree
+from gmra_trees import CoverTree, DyadicTree
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-n", "--num_examples", type=int, default=10000,
+                        help="number of examples from mnist to process")
+    args = parser.parse_args()
+
     (X_train, _), (X_test, _) = mnist.load_data()
     X: np.ndarray = np.vstack([X_train, X_test])
     X = pt.from_numpy(X.reshape(X.shape[0], -1).astype(np.float32))
@@ -36,22 +42,30 @@ def main() -> None:
 
     max_scale = 13
 
-    covertree = CoverTree(max_scale=max_scale)
-    print(covertree.num_nodes, X.shape[0])
-    print(covertree.min_scale, covertree.max_scale)
+    cover_tree = CoverTree(max_scale=max_scale)
+    print(cover_tree.num_nodes, X.shape[0])
+    print(cover_tree.min_scale, cover_tree.max_scale)
 
-    for pt_idx in tqdm(list(range(X.shape[0]))[:-1], desc="building covertree"):
-        covertree.insert_pt(pt_idx, X)
+    for pt_idx in tqdm(list(range(X.shape[0]))[:args.num_examples],
+                       desc="building covertree"):
+        cover_tree.insert_pt(pt_idx, X)
         # print()
 
-    print(covertree.num_nodes, X.shape[0])
-    print(covertree.min_scale, covertree.max_scale)
+    print(cover_tree.num_nodes, X.shape[0])
+    print(cover_tree.min_scale, cover_tree.max_scale)
 
-    """
-    celltree = DyadicCellTree().from_covertree(covertree)
-    celltree.check_tree()
-    print("num cells", celltree.num_nodes)
-    """
+    root_idxs = cover_tree.root.get_subtree_idxs(cover_tree.max_scale)
+    print("number of pts accessible from root: ", root_idxs.size(),
+          "expected number of pts accessible (num pts processed): ", args.num_examples)
+
+    dyadic_tree = DyadicTree(cover_tree)
+    print(dyadic_tree.num_nodes, dyadic_tree.root.idxs.size())
+    print(dyadic_tree.validate())
+
+    print(dyadic_tree.num_levels)
+
+    for level in range(dyadic_tree.num_levels):
+        print(dyadic_tree.get_idxs_at_level(level))
 
 
 if __name__ == "__main__":

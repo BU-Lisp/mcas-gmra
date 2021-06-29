@@ -75,6 +75,32 @@ CoverNode::get_children(int64_t scale,
 }
 
 
+torch::Tensor
+CoverNode::get_subtree_idxs(int64_t max_scale)
+{
+    std::list<CoverNodePtr> nodes_at_current_scale = {this->shared_from_this()};
+    std::unordered_set<int64_t> pt_idxs;
+
+    bool stop = false;
+    for(int64_t scale = max_scale; scale >= 0; --scale)
+    {
+        std::list<CoverNodePtr> children;
+        for(auto node: nodes_at_current_scale)
+        {
+            for(auto c: node->get_children(scale, false))
+            {
+                children.push_back(c);
+                pt_idxs.insert(node->_pt_idx);
+            }
+        }
+
+        nodes_at_current_scale = children;
+    }
+
+    return torch::tensor(std::vector<int64_t>(pt_idxs.begin(), pt_idxs.end()));
+}
+
+
 CoverTree::~CoverTree()
 {
 }
