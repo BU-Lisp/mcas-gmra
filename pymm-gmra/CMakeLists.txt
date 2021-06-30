@@ -12,6 +12,8 @@ find_package(Torch REQUIRED)
 find_library(TORCH_PYTHON_LIBRARY torch_python PATHS "${TORCH_INSTALL_PREFIX}/lib")
 # find_package(Python REQUIRED)
 
+message("${Torch_INCLUDE_DIRS}")
+
 
 get_filename_component(BASE_ROOT ${CMAKE_CURRENT_SOURCE_DIR} ABSOLUTE)
 get_filename_component(3RD_PARTY_ROOT ${BASE_ROOT}/3rd_party ABSOLUTE)
