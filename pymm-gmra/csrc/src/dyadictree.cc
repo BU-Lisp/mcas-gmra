@@ -102,6 +102,8 @@ DyadicTree::validate()
         cells = next_cells;
         level++;
     }
+
+    return true;
 }
 
 std::vector<torch::Tensor>

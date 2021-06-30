@@ -81,7 +81,6 @@ CoverNode::get_subtree_idxs(int64_t max_scale)
     std::list<CoverNodePtr> nodes_at_current_scale = {this->shared_from_this()};
     std::unordered_set<int64_t> pt_idxs;
 
-    bool stop = false;
     for(int64_t scale = max_scale; scale >= 0; --scale)
     {
         std::list<CoverNodePtr> children;
