@@ -17,7 +17,7 @@ del _cd_
 
 
 # PYTHON PROJECT IMPORTS
-from gmra_trees import CoverTree, DyadicTree
+from mcas_gmra import CoverTree, DyadicTree
 
 
 def main() -> None:

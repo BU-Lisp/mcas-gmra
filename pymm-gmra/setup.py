@@ -1,5 +1,6 @@
 # SYSTEM IMPORTS
 from typing import List, Dict
+import torch
 from torch.utils import cpp_extension
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
@@ -30,10 +31,11 @@ sources = [
            os.path.join(pybind_dir, "pybind_trees.cc"),
           ]
 
-extension = Extension(
+extension = cpp_extension.CppExtension(
     name=name,
     sources=sources,
     include_dirs=cpp_extension.include_paths() + [inc_dir],
+    extra_compile_args=["-std=c++14"],
     language="c++"
 )
 
@@ -46,6 +48,5 @@ setup(
     long_description="",
     ext_modules=[extension],
     cmdclass=dict(build_ext=cpp_extension.BuildExtension),
-    zip_safe=False,
 )
 

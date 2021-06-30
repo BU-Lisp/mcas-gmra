@@ -6,7 +6,7 @@
 // SYSTEM INCLUDES
 #include <map>
 #include <memory>
-#include <torch/torch.h>
+#include <torch/extension.h>
 #include <tuple>
 #include <unordered_set>
 #include <vector>
