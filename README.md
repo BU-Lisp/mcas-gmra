@@ -5,9 +5,10 @@ gmra algorithm with ibm mcas nvram technology
 # Dependencies
 1) tensorflow (doesn't matter cpu or gpu version...using it to load mnist)
 2) pytorch
-3) tqdm (python package)
-4) cmake (> 3.0)
-5) mcas (and pymm)
+3) sklearn
+4) tqdm (python package)
+5) cmake (> 3.0)
+6) mcas (and pymm)
 
 ## NOTE
 -mcas installs to your system python interpreter. Therefore, the rest of these dependencies must be installed to the system interpreter as well (will still work if installed to the user (--user) system environment).
