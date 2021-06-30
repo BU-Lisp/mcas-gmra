@@ -242,7 +242,7 @@ CoverTree::get_children_and_distances(const torch::Tensor& pt,
         //          << Q_dists.sizes() << std::endl;
         //std::cout << "CoverTree::get_children_and_distances: Qi_dists.sizes(): "
         //          << Qi_dists.sizes() << std::endl;
-        torch::Tensor dists = torch::hstack({Q_dists, Qi_dists});
+        torch::Tensor dists = torch::stack({Q_dists, Qi_dists}, 0).view({-1});
         //std::cout << "CoverTree::get_children_and_distances: exit" << std::endl;
         return std::make_tuple(Q, dists);
     }
