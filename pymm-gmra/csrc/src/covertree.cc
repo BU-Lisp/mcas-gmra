@@ -8,7 +8,7 @@
 #include "trees/covertree.h"
 
 
-using ALL = torch::indexing::Slice;
+// using ALL = torch::indexing::Slice;
 
 
 CoverNodePtr
@@ -128,11 +128,11 @@ CoverTree::insert_pt(int64_t pt_idx,
         return;
     }
 
-    const torch::Tensor& pt = X.index({pt_idx, ALL()});
+    const torch::Tensor& pt = X.index({pt_idx}); //, ALL()});
 
     Q_TYPE Qi_p_ds = {{this->_root},
                       this->compute_distances(pt,
-                        X.index({this->_root->_pt_idx, ALL()}))};
+                        X.index({this->_root->_pt_idx}))}; //, ALL()}))};
 
     int64_t scale = this->_max_scale;
     CoverNodePtr parent = nullptr;
@@ -225,8 +225,9 @@ CoverTree::get_children_and_distances(const torch::Tensor& pt,
     if(Q_idxs.size() > 0)
     {
         torch::Tensor X_pts = X.index({torch::tensor(std::vector<int64_t>(Q_idxs.begin(),
-                                                                          Q_idxs.end())),
-                                             ALL()});
+                                                                          Q_idxs.end()))});
+                                             //,
+                                             //ALL()});
 
         // now join them together
         // std::list<CoverNodePtr> joined;
@@ -242,7 +243,7 @@ CoverTree::get_children_and_distances(const torch::Tensor& pt,
         //          << Q_dists.sizes() << std::endl;
         //std::cout << "CoverTree::get_children_and_distances: Qi_dists.sizes(): "
         //          << Qi_dists.sizes() << std::endl;
-        torch::Tensor dists = torch::stack({Q_dists, Qi_dists}, 0).view({-1});
+        torch::Tensor dists = torch::cat({Q_dists, Qi_dists}, 0).view({-1});
         //std::cout << "CoverTree::get_children_and_distances: exit" << std::endl;
         return std::make_tuple(Q, dists);
     }

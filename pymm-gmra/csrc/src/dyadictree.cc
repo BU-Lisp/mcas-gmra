@@ -77,8 +77,8 @@ DyadicTree::validate()
             }
         }
 
-        torch::Tensor idx_union = torch::stack(std::vector<torch::Tensor>(all_idxs.begin(),
-                                                                          all_idxs.end()),
+        torch::Tensor idx_union = torch::cat(std::vector<torch::Tensor>(all_idxs.begin(),
+                                                                        all_idxs.end()),
                                                0).view({-1});
 
         torch::Tensor idx_unique = std::get<0>(torch::_unique2(idx_union));
