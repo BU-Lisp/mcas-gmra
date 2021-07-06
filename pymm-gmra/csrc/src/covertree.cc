@@ -106,7 +106,7 @@ CoverTree::~CoverTree()
 
 
 void
-CoverTree::insert(const torch::Tensor& X)
+CoverTree::insert(torch::Tensor X)
 {
     for(int64_t pt_idx = 0; pt_idx < X.size(0); ++pt_idx)
     {
@@ -116,7 +116,7 @@ CoverTree::insert(const torch::Tensor& X)
 
 void
 CoverTree::insert_pt(int64_t pt_idx,
-                     const torch::Tensor& X)
+                     torch::Tensor X)
 {
     //std::cout << "CoverTree::insert_pt: inserting pt_idx: " << pt_idx << std::endl;
     if(!this->_root)
@@ -195,8 +195,8 @@ CoverTree::insert_pt(int64_t pt_idx,
 }
 
 Q_TYPE
-CoverTree::get_children_and_distances(const torch::Tensor& pt,
-                                      const torch::Tensor& X,
+CoverTree::get_children_and_distances(torch::Tensor pt,
+                                      torch::Tensor X,
                                       const Q_TYPE& Qi_p_ds,
                                       int64_t scale)
 {
@@ -257,8 +257,8 @@ CoverTree::get_children_and_distances(const torch::Tensor& pt,
 
 
 torch::Tensor
-CoverTree::compute_distances(const torch::Tensor& pt,
-                             const torch::Tensor& X)
+CoverTree::compute_distances(torch::Tensor pt,
+                             torch::Tensor X)
 {
     //std::cout << "CoverTree::compute_distances: enter" << std::endl;
     //std::cout << "CoverTree::compute_distances: pt.sizes(): " << pt.sizes() << std::endl;

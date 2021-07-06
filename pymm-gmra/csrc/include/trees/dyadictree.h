@@ -28,7 +28,7 @@ class DyadicCell
     friend class DyadicTree;
 
 public:
-    DyadicCell(const torch::Tensor& idxs): _idxs(idxs) {}
+    DyadicCell(torch::Tensor idxs): _idxs(idxs) {}
 
     virtual
     ~DyadicCell() = default;

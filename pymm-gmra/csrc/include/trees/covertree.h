@@ -69,11 +69,11 @@ public:
     ~CoverTree();
 
     void
-    insert(const torch::Tensor& X);
+    insert(torch::Tensor X);
 
     void
     insert_pt(int64_t pt_idx,
-              const torch::Tensor& X);
+              torch::Tensor X);
 
     CoverNodePtr
     get_root() { return this->_root; }
@@ -90,14 +90,14 @@ public:
 private:
 
     Q_TYPE
-    get_children_and_distances(const torch::Tensor& pt,
-                               const torch::Tensor& X,
+    get_children_and_distances(torch::Tensor pt,
+                               torch::Tensor X,
                                const Q_TYPE& Qi_p_ds,
                                int64_t level);
 
     torch::Tensor
-    compute_distances(const torch::Tensor& pt,
-                      const torch::Tensor& X);
+    compute_distances(torch::Tensor pt,
+                      torch::Tensor X);
 
     float
     get_min_dist(const Q_TYPE& Qi_p_ds);
