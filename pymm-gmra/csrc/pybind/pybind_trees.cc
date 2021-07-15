@@ -18,15 +18,23 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m)
         .def(py::init([](int64_t pt_idx) { return std::make_shared<CoverNode>(pt_idx); }))
         .def("add_child", &CoverNode::add_child)
         .def("get_children", &CoverNode::get_children)
-        .def("get_subtree_idxs", &CoverNode::get_subtree_idxs);
+        .def("get_subtree_idxs", &CoverNode::get_subtree_idxs)
+        .def_property_readonly("pt_idx", &CoverNode::pt_idx);
 
     py::class_<CoverTree, std::shared_ptr<CoverTree> >(m, "CoverTree")
         .def(py::init<int64_t, float>(),
              "constructor",
              py::arg("max_scale") = 10,
              py::arg("base") = 2.0)
+        .def(py::init<std::string>(),
+             "constructor",
+             py::arg("path"))
         .def("insert", &CoverTree::insert)
         .def("insert_pt", &CoverTree::insert_pt)
+        .def("validate", &CoverTree::validate)
+        .def("parent_vector", &CoverTree::parent_vector)
+        .def("save", &CoverTree::save)
+        .def("__eq__", &CoverTree::equals)
         .def_property_readonly("root", &CoverTree::get_root)
         .def_property_readonly("num_nodes", &CoverTree::get_num_nodes)
         .def_property_readonly("min_scale", &CoverTree::get_min_scale)

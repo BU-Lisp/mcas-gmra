@@ -56,6 +56,9 @@ public:
     std::vector<torch::Tensor>
     get_idxs_at_level(int64_t level);
 
+    // void
+    // save(std::string path);
+
     DyadicCellPtr
     get_root() { return this->_root; }
 
