@@ -67,7 +67,7 @@ def main() -> None:
         print("validating covertree...this may take a while")
         assert(cover_tree.validate(X_pt))
 
-    filename = "mnist_covertree.json"
+    filename = "cifar10_covertree.json"
     filepath = os.path.join(args.data_dir, filename)
 
     print("serializing covertree to [%s]" % filepath)

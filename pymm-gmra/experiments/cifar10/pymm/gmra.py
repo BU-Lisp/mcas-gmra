@@ -1,5 +1,5 @@
 # SYSTEM IMPORTS
-from tensorflow.keras.datasets import mnist
+from tensorflow.keras.datasets import cifar10
 from typing import Set
 from tqdm import tqdm
 import argparse
