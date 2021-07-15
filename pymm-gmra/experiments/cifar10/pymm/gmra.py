@@ -39,8 +39,8 @@ def main() -> None:
     print("loading data")
     start_time = time.time()
     (X_train, _), (X_test, _) = cifar10.load_data()
-    shelf.X = np.vstack([X_train, X_test])
-    shelf.X = shelf.X.reshape(shelf.X.shape[0], -1).astype(np.float32)
+    X = np.vstack([X_train, X_test])
+    shelf.X = X.reshape(X.shape[0], -1).astype(np.float32)
     end_time = time.time()
     print("done. took {0:.4f} seconds".format(end_time-start_time))
 
