@@ -43,7 +43,8 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m)
 
     py::class_<DyadicCell, std::shared_ptr<DyadicCell> >(m, "DyadicCell")
         .def(py::init<torch::Tensor>())
-        .def_property_readonly("idxs", &DyadicCell::get_idxs);
+        .def_property_readonly("idxs", &DyadicCell::get_idxs)
+        .def_property_readonly("children", &DyadicCell::get_children);
 
     py::class_<DyadicTree, std::shared_ptr<DyadicTree> >(m, "DyadicTree")
         .def(py::init<std::shared_ptr<CoverTree> >())

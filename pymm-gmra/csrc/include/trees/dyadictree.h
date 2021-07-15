@@ -36,6 +36,10 @@ public:
     torch::Tensor
     get_idxs() { return this->_idxs; }
 
+    std::vector<DyadicCellPtr>
+    get_children() { return std::vector<DyadicCellPtr>(this->_children.begin(),
+                                                       this->_children.end()); }
+
 private:
     torch::Tensor               _idxs;
     std::list<DyadicCellPtr>    _children;
