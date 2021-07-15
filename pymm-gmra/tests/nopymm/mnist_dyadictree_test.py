@@ -2,7 +2,6 @@
 from tensorflow.keras.datasets import mnist
 from typing import Set
 from tqdm import tqdm
-from sklearn.metrics.pairwise import euclidean_distances
 import argparse
 import numpy as np
 import os

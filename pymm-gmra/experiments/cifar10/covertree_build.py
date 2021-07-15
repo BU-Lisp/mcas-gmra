@@ -2,7 +2,6 @@
 from tensorflow.keras.datasets import cifar10
 from typing import Set
 from tqdm import tqdm
-from sklearn.metrics.pairwise import euclidean_distances
 import argparse
 import numpy as np
 import os
@@ -27,6 +26,9 @@ def main() -> None:
     parser.add_argument("--validate", action="store_true",
                         help="if enabled, perform an expensive tree validate operation")
     args = parser.parse_args()
+
+    if not os.path.exists(args.data_dir):
+        os.makedirs(args.data_dir)
 
     print("loading data")
     # This part would be replaced with loading a custom dataset.
@@ -62,10 +64,13 @@ def main() -> None:
         cover_tree.insert_pt(pt_idx, X_pt)
 
     if(args.validate):
+        print("validating covertree...this may take a while")
         assert(cover_tree.validate(X_pt))
 
     filename = "mnist_covertree.json"
     filepath = os.path.join(args.data_dir, filename)
+
+    print("serializing covertree to [%s]" % filepath)
     cover_tree.save(filepath)
 
 
